@@ -10,7 +10,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class ManifestManifester {
-    public static InputStream getManifest(URL url){
+    public static InputStream getManifest(URL url) throws Throwable{
         Path tempDirWithPrefix;
         try{
             tempDirWithPrefix = Files.createTempDirectory("forge");
@@ -25,10 +25,9 @@ public class ManifestManifester {
                     return stream;
                 }
             }
-        }catch (Throwable ignored){
-            ignored.printStackTrace();
-            return null;
+        }catch (IOException e){
+            throw e;
         }
-        return null;
+        throw new FileNotFoundException();
     }
 }
