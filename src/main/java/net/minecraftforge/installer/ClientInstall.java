@@ -28,11 +28,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 
-public class ClientInstall implements ActionType {
+public class ClientInstall {
     //private int selectedMirror;
     private List<Artifact> grabbed;
 
-    @Override
     public boolean run(File target, Predicate<String> optionals)
     {
         if (!target.exists())
@@ -360,7 +359,6 @@ public class ClientInstall implements ActionType {
         return entryBuffer.toByteArray();
     }
 
-    @Override
     public boolean isPathValid(File targetDir)
     {
         if (targetDir.exists())
@@ -372,7 +370,6 @@ public class ClientInstall implements ActionType {
     }
 
 
-    @Override
     public String getFileError(File targetDir)
     {
         if (targetDir.exists())
@@ -385,7 +382,6 @@ public class ClientInstall implements ActionType {
         }
     }
 
-    @Override
     public String getSuccessMessage()
     {
         if (grabbed.size() > 0)
@@ -395,7 +391,6 @@ public class ClientInstall implements ActionType {
         return String.format("Successfully installed client profile %s for version %s into launcher", VersionInfo.getProfileName(), VersionInfo.getVersion());
     }
 
-    @Override
     public String getSponsorMessage()
     {
         return MirrorData.INSTANCE.hasMirrors() ? String.format("<html><a href=\'%s\'>Data kindly mirrored by %s</a></html>", MirrorData.INSTANCE.getSponsorURL(),MirrorData.INSTANCE.getSponsorName()) : null;
