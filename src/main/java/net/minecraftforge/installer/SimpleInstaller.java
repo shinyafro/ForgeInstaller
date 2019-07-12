@@ -35,7 +35,7 @@ public class SimpleInstaller
             return false;
         };
         File dir = new File("E:\\mc clients\\vanilla");
-        InstallerAction action = InstallerAction.CLIENT;
+        ClientInstall action = new ClientInstall();
         action.run(dir, optPred);
     }
 

@@ -458,72 +458,38 @@ public class DownloadUtils {
         }
     }
 
-    public static IMonitor buildMonitor()
-    {
-        if (ServerInstall.headless)
-        {
-            return new IMonitor()
+    public static IMonitor buildMonitor() {
+
+        return new IMonitor() {
+            private ProgressMonitor monitor;
+
             {
+                monitor = new ProgressMonitor(null, "Downloading libraries", "Libraries are being analyzed", 0, 1);
+                monitor.setMillisToPopup(0);
+                monitor.setMillisToDecideToPopup(0);
+            }
 
-                @Override
-                public void setMaximum(int max)
-                {
-                }
+            @Override
+            public void setMaximum(int max) {
+                monitor.setMaximum(max);
+            }
 
-                @Override
-                public void setNote(String note)
-                {
-                    System.out.println("MESSAGE: "+ note);
-                }
+            @Override
+            public void setNote(String note) {
+                System.out.println(note);
+                monitor.setNote(note);
+            }
 
-                @Override
-                public void setProgress(int progress)
-                {
+            @Override
+            public void setProgress(int progress) {
+                monitor.setProgress(progress);
+            }
 
-                }
-
-                @Override
-                public void close()
-                {
-
-                }
-
-            };
-        }
-        else
-        {
-            return new IMonitor() {
-                private ProgressMonitor monitor;
-                {
-                    monitor = new ProgressMonitor(null, "Downloading libraries", "Libraries are being analyzed", 0, 1);
-                    monitor.setMillisToPopup(0);
-                    monitor.setMillisToDecideToPopup(0);
-                }
-                @Override
-                public void setMaximum(int max)
-                {
-                    monitor.setMaximum(max);
-                }
-
-                @Override
-                public void setNote(String note)
-                {
-                    System.out.println(note);
-                    monitor.setNote(note);
-                }
-
-                @Override
-                public void setProgress(int progress)
-                {
-                    monitor.setProgress(progress);
-                }
-
-                @Override
-                public void close()
-                {
-                    monitor.close();
-                }
-            };
-        }
+            @Override
+            public void close() {
+                monitor.close();
+            }
+        };
     }
+
 }
