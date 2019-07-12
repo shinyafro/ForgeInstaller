@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.List;
 
 import argo.jdom.JdomParser;
@@ -27,8 +28,9 @@ import com.sun.javaws.exceptions.InvalidArgumentException;
 import net.minecraftforge.installer.Util.ManifestManifester;
 
 public class VersionInfo {
-    public static VersionInfo instance;
-    public final JsonRootNode versionData;
+    private static Path installerDir;
+    private static VersionInfo instance;
+    private final JsonRootNode versionData;
     private final List<OptionalLibrary> optionals = Lists.newArrayList();
 
     public static VersionInfo getInstance() {
@@ -182,5 +184,13 @@ public class VersionInfo {
         }
 
         return ret;
+    }
+
+    public static Path getInstallerDir() {
+        return installerDir;
+    }
+
+    public static void setInstallerDir(Path installerDirz) {
+        installerDir = installerDirz;
     }
 }

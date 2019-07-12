@@ -10,11 +10,11 @@ import net.minecraftforge.installer.ForgeClasses.OptionalLibrary;
 import net.minecraftforge.installer.ForgeClasses.VersionInfo;
 
 
-public class SilentInstaller
+public class SilentInstaller //exception : "1.12.2-14.23.5.2837"
 {
     public static void main(String[] args){
         try {
-            install("C:\\Users\\Shiny\\AppData\\Roaming\\.minecraft", "1.12.2-14.23.5.2837");
+            install("C:\\Users\\Shiny\\AppData\\Roaming\\DirtCraft\\DirtLauncher", "1.12.2-14.23.5.2838");
         } catch (Exception e){
             e.printStackTrace();
         }
