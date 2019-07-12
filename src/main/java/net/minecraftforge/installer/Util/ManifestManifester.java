@@ -10,24 +10,21 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class ManifestManifester {
-    public static InputStream getManifest(URL url) throws Throwable{
+    public static InputStream getManifest(URL url) throws IOException {
         Path tempDirWithPrefix;
-        try{
-            tempDirWithPrefix = Files.createTempDirectory("forge");
-            InputStream in = url.openStream();
-            Files.copy(in, tempDirWithPrefix, StandardCopyOption.REPLACE_EXISTING);
-            ZipFile z = new ZipFile(tempDirWithPrefix.toString());
-            Enumeration<? extends ZipEntry> entries = z.entries();
-            while(entries.hasMoreElements()) {
-                ZipEntry entry = entries.nextElement();
-                if (entry.getName().equals("install_profile.json")) {
-                    InputStream stream = z.getInputStream(entry);
-                    return stream;
-                }
+        tempDirWithPrefix = Files.createTempDirectory("forge");
+        InputStream in = url.openStream();
+        Files.copy(in, tempDirWithPrefix, StandardCopyOption.REPLACE_EXISTING);
+        ZipFile z = new ZipFile(tempDirWithPrefix.toString());
+        Enumeration<? extends ZipEntry> entries = z.entries();
+        while (entries.hasMoreElements()) {
+            ZipEntry entry = entries.nextElement();
+            if (entry.getName().equals("install_profile.json")) {
+                InputStream stream = z.getInputStream(entry);
+                return stream;
             }
-        }catch (IOException e){
-            throw e;
         }
+
         throw new FileNotFoundException();
     }
 }

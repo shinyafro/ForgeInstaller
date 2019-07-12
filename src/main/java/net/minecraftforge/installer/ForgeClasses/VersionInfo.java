@@ -35,10 +35,15 @@ public class VersionInfo {
         return instance;
     }
 
-    public VersionInfo(URL url)
+    public VersionInfo(URL url) throws IOException
     {
+        InputStream installProfile;
         instance = this;
-        InputStream installProfile = ManifestManifester.getManifest(url);
+        try {
+            installProfile = ManifestManifester.getManifest(url);
+        } catch (IOException e){
+            throw e;
+        }
         JdomParser parser = new JdomParser();
 
         try

@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.google.common.base.Predicate;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import net.minecraftforge.installer.ForgeClasses.ClientInstall;
 import net.minecraftforge.installer.ForgeClasses.OptionalLibrary;
 import net.minecraftforge.installer.ForgeClasses.VersionInfo;
@@ -13,15 +12,22 @@ import net.minecraftforge.installer.ForgeClasses.VersionInfo;
 
 public class SilentInstaller
 {
+    public static void main(String[] args){
+        try {
+            install("C:\\Users\\Shiny\\AppData\\Roaming\\.minecraft", "1.12.2-14.23.5.2837");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     private static OptionalListEntry[] optionals;
-    public static void install(String directory, String forgeVersion){ //ex: c:minecraft // 1.12.2-14.23.5.2838
+    public static void install(String directory, String forgeVersion) throws IOException{ //ex: c:minecraft // 1.12.2-14.23.5.2838
         String forgeDownload = "https://files.minecraftforge.net/maven/net/minecraftforge/forge/"+forgeVersion+"/forge-"+forgeVersion+"-installer.jar";
         try {
             URL url = new URL(forgeDownload);
+            new VersionInfo(url);
         } catch (MalformedURLException e){
             throw new IllegalArgumentException();
         }
-
 
         if (System.getProperty("java.net.preferIPv4Stack") == null) //This is a dirty hack, but screw it, i'm hoping this as default will fix more things then it breaks.
         {
