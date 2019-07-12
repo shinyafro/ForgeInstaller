@@ -1,4 +1,4 @@
-package net.minecraftforge.installer;
+package net.minecraftforge.installer.ForgeClasses;
 
 public interface IMonitor {
     void setMaximum(int max);

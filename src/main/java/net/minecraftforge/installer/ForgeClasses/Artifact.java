@@ -1,4 +1,4 @@
-package net.minecraftforge.installer;
+package net.minecraftforge.installer.ForgeClasses;
 
 import java.io.File;
 

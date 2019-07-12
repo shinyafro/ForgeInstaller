@@ -1,4 +1,4 @@
-package net.minecraftforge.installer;
+package net.minecraftforge.installer.ForgeClasses;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -43,7 +43,7 @@ public class Java6Gate
         }
 
         // cannot reference directly, because this class is compiled separately for java 6
-        Class<?> mainClass = Class.forName("net.minecraftforge.installer.SimpleInstaller");
+        Class<?> mainClass = Class.forName("net.minecraftforge.installer.SilentInstaller");
         Method main = mainClass.getMethod("main", String[].class);
         main.invoke(null, (Object) args);
     }

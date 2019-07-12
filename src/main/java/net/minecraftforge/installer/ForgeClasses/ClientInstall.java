@@ -1,4 +1,4 @@
-package net.minecraftforge.installer;
+package net.minecraftforge.installer.ForgeClasses;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -47,7 +47,7 @@ public class ClientInstall {
         }
 
         File versionRootDir = new File(target,"versions");
-        File versionTarget = new File(versionRootDir,VersionInfo.getVersionTarget());
+        File versionTarget = new File(versionRootDir, VersionInfo.getVersionTarget());
         if (!versionTarget.mkdirs() && !versionTarget.isDirectory())
         {
             if (!versionTarget.delete())

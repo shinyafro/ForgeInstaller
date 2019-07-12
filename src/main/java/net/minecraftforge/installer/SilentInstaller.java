@@ -1,15 +1,25 @@
 package net.minecraftforge.installer;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import com.google.common.base.Predicate;
+import net.minecraftforge.installer.ForgeClasses.ClientInstall;
+import net.minecraftforge.installer.ForgeClasses.OptionalLibrary;
+import net.minecraftforge.installer.ForgeClasses.VersionInfo;
 
 
-public class SimpleInstaller
+public class SilentInstaller
 {
     private static OptionalListEntry[] optionals;
     public static void main(String[] args) throws IOException
     {
+        install("C:\\Users\\Shiny\\AppData\\Roaming\\.minecraft", null);
+    }
+
+    public static void install(String directory, URL forge){
+
+
         if (System.getProperty("java.net.preferIPv4Stack") == null) //This is a dirty hack, but screw it, i'm hoping this as default will fix more things then it breaks.
         {
             System.setProperty("java.net.preferIPv4Stack", "true");
@@ -34,7 +44,7 @@ public class SimpleInstaller
 
             return false;
         };
-        File dir = new File("E:\\mc clients\\vanilla");
+        File dir = new File(directory);
         ClientInstall action = new ClientInstall();
         action.run(dir, optPred);
     }
@@ -51,7 +61,6 @@ public class SimpleInstaller
         }
 
         public boolean isEnabled(){ return this.enabled; }
-        public void setEnabled(boolean v){ this.enabled = v; }
     }
 
 }
