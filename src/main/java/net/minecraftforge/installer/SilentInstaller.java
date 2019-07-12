@@ -14,7 +14,12 @@ public class SilentInstaller
     private static OptionalListEntry[] optionals;
     public static void main(String[] args) throws IOException
     {
-        install("C:\\Users\\Shiny\\AppData\\Roaming\\.minecraft", null);
+        String dir = "C:\\Users\\Shiny\\AppData\\Roaming\\.minecraft";
+        String forgeVersion = "1.12.2-14.23.5.2838";
+        String forgeDownload = "https://files.minecraftforge.net/maven/net/minecraftforge/forge/"+forgeVersion+"/forge-"+forgeVersion+"-installer.jar";
+        URL forge = new URL(forgeDownload);
+        new VersionInfo(forge);
+        install(dir, forge);
     }
 
     public static void install(String directory, URL forge){

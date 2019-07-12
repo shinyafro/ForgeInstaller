@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.List;
 
 import argo.jdom.JdomParser;
@@ -21,15 +22,21 @@ import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 import com.google.common.io.OutputSupplier;
+import net.minecraftforge.installer.Util.ManifestManifester;
 
 public class VersionInfo {
-    public static final VersionInfo INSTANCE = new VersionInfo();
+    public static VersionInfo instance;
     public final JsonRootNode versionData;
     private final List<OptionalLibrary> optionals = Lists.newArrayList();
 
-    public VersionInfo()
+    public static VersionInfo getInstance() {
+        return instance;
+    }
+
+    public VersionInfo(URL url)
     {
-        InputStream installProfile = getClass().getResourceAsStream("/install_profile.json");
+        instance = this;
+        InputStream installProfile = ManifestManifester.getManifest(url);
         JdomParser parser = new JdomParser();
 
         try
@@ -59,16 +66,16 @@ public class VersionInfo {
 
     public static String getProfileName()
     {
-        return INSTANCE.versionData.getStringValue("install","profileName");
+        return instance.versionData.getStringValue("install","profileName");
     }
 
     public static String getVersionTarget()
     {
-        return INSTANCE.versionData.getStringValue("install","target");
+        return instance.versionData.getStringValue("install","target");
     }
     public static File getLibraryPath(File root)
     {
-        String path = INSTANCE.versionData.getStringValue("install","path");
+        String path = instance.versionData.getStringValue("install","path");
         String[] split = Iterables.toArray(Splitter.on(':').omitEmptyStrings().split(path), String.class);
         File dest = root;
         Iterable<String> subSplit = Splitter.on('.').omitEmptyStrings().split(split[0]);
@@ -83,15 +90,15 @@ public class VersionInfo {
 
     public static String getModListType()
     {
-        return !INSTANCE.versionData.isStringValue("install", "modList") ? "" :
-                INSTANCE.versionData.getStringValue("install", "modList");
+        return !instance.versionData.isStringValue("install", "modList") ? "" :
+                instance.versionData.getStringValue("install", "modList");
     }
 
     public static boolean getStripMetaInf()
     {
         try
         {
-            return INSTANCE.versionData.getBooleanValue("install", "stripMeta");
+            return instance.versionData.getBooleanValue("install", "stripMeta");
         }
         catch (Exception e)
         {
@@ -101,7 +108,7 @@ public class VersionInfo {
 
     public static JsonNode getVersionInfo()
     {
-        return INSTANCE.versionData.getNode("versionInfo");
+        return instance.versionData.getNode("versionInfo");
     }
 
     public static File getMinecraftFile(File path)
@@ -110,11 +117,11 @@ public class VersionInfo {
     }
     public static String getContainedFile()
     {
-        return INSTANCE.versionData.getStringValue("install","filePath");
+        return instance.versionData.getStringValue("install","filePath");
     }
     public static void extractFile(File path) throws IOException
     {
-        INSTANCE.doFileExtract(path);
+        instance.doFileExtract(path);
     }
 
     private void doFileExtract(File path) throws IOException
@@ -129,35 +136,35 @@ public class VersionInfo {
 
     public static String getMinecraftVersion()
     {
-        return INSTANCE.versionData.getStringValue("install","minecraft");
+        return instance.versionData.getStringValue("install","minecraft");
     }
 
     public static String getMirrorListURL()
     {
-        return INSTANCE.versionData.getStringValue("install","mirrorList");
+        return instance.versionData.getStringValue("install","mirrorList");
     }
 
     public static boolean hasMirrors()
     {
-        return INSTANCE.versionData.isStringValue("install","mirrorList");
+        return instance.versionData.isStringValue("install","mirrorList");
     }
 
     public static boolean isInheritedJson()
     {
-        return INSTANCE.versionData.isStringValue("versionInfo", "inheritsFrom") &&
-                INSTANCE.versionData.isStringValue("versionInfo", "jar");
+        return instance.versionData.isStringValue("versionInfo", "inheritsFrom") &&
+                instance.versionData.isStringValue("versionInfo", "jar");
     }
 
     public static List<OptionalLibrary> getOptionals()
     {
-        return INSTANCE.optionals;
+        return instance.optionals;
     }
 
     public static List<LibraryInfo> getLibraries(String marker, Predicate<String> filter)
     {
         List<LibraryInfo> ret = Lists.newArrayList();
 
-        for (JsonNode node : INSTANCE.versionData.getArrayNode("versionInfo", "libraries"))
+        for (JsonNode node : instance.versionData.getArrayNode("versionInfo", "libraries"))
             ret.add(new LibraryInfo(node, marker));
 
         for (OptionalLibrary opt : getOptionals())
