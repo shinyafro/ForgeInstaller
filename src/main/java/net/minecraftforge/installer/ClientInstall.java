@@ -358,41 +358,4 @@ public class ClientInstall {
 
         return entryBuffer.toByteArray();
     }
-
-    public boolean isPathValid(File targetDir)
-    {
-        if (targetDir.exists())
-        {
-            File launcherProfiles = new File(targetDir,"launcher_profiles.json");
-            return launcherProfiles.exists();
-        }
-        return false;
-    }
-
-
-    public String getFileError(File targetDir)
-    {
-        if (targetDir.exists())
-        {
-            return "The directory is missing a launcher profile. Please run the minecraft launcher first";
-        }
-        else
-        {
-            return "There is no minecraft directory set up. Either choose an alternative, or run the minecraft launcher to create one";
-        }
-    }
-
-    public String getSuccessMessage()
-    {
-        if (grabbed.size() > 0)
-        {
-            return String.format("Successfully installed client profile %s for version %s into launcher and grabbed %d required libraries", VersionInfo.getProfileName(), VersionInfo.getVersion(), grabbed.size());
-        }
-        return String.format("Successfully installed client profile %s for version %s into launcher", VersionInfo.getProfileName(), VersionInfo.getVersion());
-    }
-
-    public String getSponsorMessage()
-    {
-        return MirrorData.INSTANCE.hasMirrors() ? String.format("<html><a href=\'%s\'>Data kindly mirrored by %s</a></html>", MirrorData.INSTANCE.getSponsorURL(),MirrorData.INSTANCE.getSponsorName()) : null;
-    }
 }
