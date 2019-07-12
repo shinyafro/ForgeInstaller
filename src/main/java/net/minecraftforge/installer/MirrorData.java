@@ -106,19 +106,4 @@ public enum MirrorData {
     {
         return getChosen().url;
     }
-
-    public String getSponsorName()
-    {
-        return getChosen().name;
-    }
-
-    public String getSponsorURL()
-    {
-        return getChosen().clickURL;
-    }
-
-    public Icon getImageIcon()
-    {
-        return getChosen().getImage();
-    }
 }

@@ -87,28 +87,6 @@ public class VersionInfo {
                 INSTANCE.versionData.getStringValue("install", "modList");
     }
 
-    public static String getVersion()
-    {
-        return INSTANCE.versionData.getStringValue("install","version");
-    }
-
-    public static String getWelcomeMessage()
-    {
-        return INSTANCE.versionData.getStringValue("install","welcome");
-    }
-
-    public static String getLogoFileName()
-    {
-        return INSTANCE.versionData.getStringValue("install","logo");
-    }
-
-    public static String getURLFileName()
-    {
-        if (!INSTANCE.versionData.isStringValue("install", "urlIcon"))
-            return "/url.png";
-        return INSTANCE.versionData.getStringValue("install", "urlIcon");
-    }
-
     public static boolean getStripMetaInf()
     {
         try
@@ -164,33 +142,10 @@ public class VersionInfo {
         return INSTANCE.versionData.isStringValue("install","mirrorList");
     }
 
-    public static boolean hideClient()
-    {
-        return INSTANCE.versionData.isBooleanValue("install", "hideClient") &&
-                INSTANCE.versionData.getBooleanValue("install", "hideClient");
-    }
-
-    public static boolean hideServer()
-    {
-        return INSTANCE.versionData.isBooleanValue("install", "hideServer") &&
-                INSTANCE.versionData.getBooleanValue("install", "hideServer");
-    }
-
-    public static boolean hideExtract()
-    {
-        return INSTANCE.versionData.isBooleanValue("install", "hideExtract") &&
-                INSTANCE.versionData.getBooleanValue("install", "hideExtract");
-    }
-
     public static boolean isInheritedJson()
     {
         return INSTANCE.versionData.isStringValue("versionInfo", "inheritsFrom") &&
                 INSTANCE.versionData.isStringValue("versionInfo", "jar");
-    }
-
-    public static boolean hasOptionals()
-    {
-        return getOptionals().size() > 0;
     }
 
     public static List<OptionalLibrary> getOptionals()
