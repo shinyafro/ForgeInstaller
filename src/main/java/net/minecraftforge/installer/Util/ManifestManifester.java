@@ -22,7 +22,6 @@ public class ManifestManifester {
                 ZipEntry entry = entries.nextElement();
                 if (entry.getName().equals("install_profile.json")) {
                     InputStream stream = z.getInputStream(entry);
-                    System.out.println("dgfsgsdgsdgsdg");
                     return stream;
                 }
             }
